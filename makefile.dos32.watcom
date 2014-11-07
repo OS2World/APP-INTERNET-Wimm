@@ -1,0 +1,17 @@
+# Makefile for Watcom C++ (32-bit DOS)
+
+MSGAPI=..\xmsgapi\src
+MSGAPILIB=$(MSGAPI)\..\dos32\watcom\xmsgapi.lib
+
+CC=wcl386
+CFLAG=-bt=dos4g -l=dos4g -k32k
+CDEF=-D__DOS__
+COPT=-oneatx
+CINC=-I$(MSGAPI)
+
+wimm.exe: wimm.c wimmcfg.c progname.c
+	$(CC) $(CDEF) $(CFLAG) $(COPT) $(CINC) wimm.c wimmcfg.c progname.c $(MSGAPILIB)
+
+clean:
+	del *.obj
+	del *.exe

@@ -1,0 +1,487 @@
+
+
+                               *
+
+                          WIMM v1.31
+
+                      Where Is My Mail ?!
+
+               (c) 1992,93,94  Gerard van Essen
+
+              A personal mail scanner for Squish
+
+           Squish is a trademark of Scott J. Dudley
+
+       WIMM uses the Squish MSGAPI made by Scott Dudley
+
+                               *
+
+                               *
+
+                         -------------
+                         What is WIMM?
+                         -------------
+
+
+WIMM (short for "Where Is My Mail") is a personal mail scanner
+for Squish. It is designed to be used together with the Squish
+echomail processor made by Scott Dudley.
+
+It will read your Squish configuration file (Squish.cfg) and
+scan all echomail areas listed (or all areas found in a
+'echotoss.log' file), for mail addressed to you. When it finds
+a personal message it will move or copy the message to another
+area, or make a list of all messages found and post that list
+in a message.
+
+WIMM can be useful in several ways. Maybe you are just as
+curious as I am, and want to know if there is personal mail as
+soon as possible, without having to read all messages.
+Or maybe there's so much mail on your system, that you can't
+ever read it all.. Or maybe you just want to keep your
+personal messages in a seperate area...
+
+
+                         -------------
+                         Main features
+                         -------------
+
+*    Reads Squish.cfg.
+*    If applicable, reads Areas.bbs as well.
+*    Optionally reads echotoss.log file and scans only areas
+     listed in that file.
+*    Scans both *.MSG and Squish style message areas.
+*    Moves, copies or lists personal messages.
+*    Accepts more than one name to scan for.
+*    Optionally marks found messages as "received".
+*    Scans messages from lastread pointer, or all messages in
+     the area.
+
+
+                       ----------------
+                       Copyright stuff.
+                       ----------------
+
+I'll keep this short: this program is free for all to use. 
+
+You are NOT allowed to:
+
+- sell this program for a profit.
+- modify it, or
+- distribute it in modified form.
+- etc., etc.
+
+Hopefully you catch my drift..
+
+Use this program at your own risk, the author can not be held
+responsible for any damage WIMM might cause.
+
+
+                      ------------------
+                      How do you run it?
+                      ------------------
+
+
+That's easy! Just edit WIMM.CFG and type WIMM. 
+
+
+                      ------------------
+                      WIMM.CFG reference
+                      ------------------
+
+WIMM.CFG is the default name of the configuration file. The
+configuration file may contain comments. On a comment line the
+first non-space character should be a semi-column ';'.
+Example:
+
+; This is a comment line..
+
+If a line is not a comment, it should contain a keyword.
+Keywords are not case sensitive, so "Name" is interpreted the
+same as "name" or "NaME".
+Every keyword is followed by a 'value':
+
+<keyword>     <value>
+
+like:
+
+Name          "Gerard van.Essen"
+Mode          List
+etc.
+
+
+            --------------------------------------
+            Keywords in WIMM's configuration file.
+            --------------------------------------
+
+
+SquishCfg
+---------
+
+This keyword tells WIMM where to look for the Squish
+configuration file. Specify both path and name here.
+
+Example:
+
+SquishCfg      C:\Squish\Squish.cfg 
+
+
+Name
+----
+
+This tells WIMM what names to look for in the TO: field of the
+messages. You can supply as many names as you like. Please put
+double quotes around the names. The name search is not case-
+sensitive, so "Joe SysOp" will have the same effect as "joe
+sysop".
+
+Example:
+
+Name           "Gerard van Essen" 
+Name           "gerard van.essen" 
+Name           "Art"
+
+
+WimmArea
+---------
+
+This is the location of the area where WIMM should list, move
+or copy the personal messages. This must be a LOCAL area, not
+netmail or echomail!
+
+Example:
+
+WimmArea     D:\Local\Personal
+
+
+WimmType
+---------
+
+This is the type of the WimmArea. This can be either "Squish"
+or "*.MSG".
+
+Example:
+
+WimmType    Squish
+
+
+Mode
+----
+
+This tells WIMM what to do with the personal messages. This
+can be:  
+
+- LIST:    WIMM will post a message with a list of all
+           personal messages. It will also give you the
+           current message number. Note, hoewever, that due
+           to Squish' "dynamic renumbering" feature, this
+           number is not necessarily correct (anymore).
+
+- COPY:    WIMM will copy all personal messages to WimmArea.
+
+- MOVE:    WIMM will move all personal messages to WimmArea.
+
+Example:
+
+Mode List 
+
+
+MarkReceived
+------------
+
+This tells WIMM if the personal messages that are found should
+be marked "received". If WIMM finds a personal message that
+has the "received" flag set, it will skip that message. So, if
+you set this to "Yes", personal messages will only be moved,
+copied or listed once. (For 'move' this is quite redundant ;-)
+This can be either Yes or No.
+
+Example:
+
+MarkReceived Yes
+
+
+ScanFrom
+--------
+
+This keyword changes which messages are scanned by WIMM. If
+this is set to "LastRead", WIMM will scan the messages AFTER
+the lastread pointer in each area. 
+The lastread pointer will be taken from a file called
+"lastread" (for *.msg areas) or from the appropriate *.SQL
+file (Squish areas, the first lastread pointer from that file
+is used).
+
+Note for GoldED users: if "Scanfrom Lastread" doesn't seem to
+work, check out the GoldED documentation for the SQUISHUSERNO
+keyword. WIMM's 'Lastread' feature will work with SQUISHUSERNO
+set to 0.
+GoldED sometimes seems to do complicated things with a
+USER.BBS file and lastread-file offsets, even in a single user
+environment without a BBS (!).
+
+If "Lastread" is set to "All", WIMM will ignore the lastread
+pointer and always scan all messages. (If you use this, it's
+probably wise to set MarkReceived to "Yes").
+So, this can be either "LastRead" or "All".
+
+Example:
+
+ScanFrom LastRead
+
+
+EchoArea
+--------
+
+This declares an extra area to be scanned. The format is the
+same as the EchoArea keyword in Squish.CFG.
+
+Default behaviour:
+
+*    By default, WIMM will not scan the Netmail area. 
+*    The 'Dupes' area is always skipped (unless you
+     specifically 'Force' it). 
+*    The Bad_Msgs is scanned, it is treated like a normal
+     echomail area.
+
+So, if you would like WIMM to scan the netmail area (or any
+other area not listed in your Squish configuration file) as
+well, you should declare it manually in WIMM.CFG.
+
+Example:
+
+EchoArea  Netmail   C:\Bink\Netmail -$
+
+
+Attributes
+----------
+
+With 'Attributes' you can specify the attributes that should
+be placed on a moved, copied or 'list' message in the
+WimmArea. The original message will not be changed, except for
+possibly adding the 'received' status (if 'Markreceived' is
+set to 'Yes').
+For the message in the WIMMarea, WIMM will clear the
+attributes, and add the ones you specify with the 'Attributes'
+keyword.
+
+Options:
+
+P - Private
+S - Sent
+C - Scanned
+L - Local
+
+Example:
+
+Attributes      SCP
+
+
+Log
+---
+
+The Log statement will let WIMM log the scanned areas,
+personal messages and errors in logfile. If no log is
+specified, there will be no logfile. Please specify full path
+and filename.
+
+Example:
+
+Log C:\Squish\Wimm.log
+
+
+Exclude
+-------
+
+With EXCLUDE you can prevent areas from being scanned. You can
+specify 1 area for every exclude line. Use the areatag to
+specify the echo.
+
+Example: 
+
+Exclude MUFFIN
+
+This will prevent MUFFIN from being scanned.
+
+
+There is also very limited wildcard support. You can use '*'
+as a wildcard. It can _only_ be the first or the last
+character!
+
+Examples: 
+
+Exclude *028
+
+This will prevent all areas with a tag ending with 028 (like
+points.028, basic.028 etc) from being scanned.
+
+Exclude BASI*
+
+This will exclude areas starting with BASI (like BASIC,
+BASIC.028..). 
+
+You can have as many 'Exclude' statements as you like.
+
+
+Force 
+-----
+
+With FORCE you can have WIMM scan a certain area on every run.
+This is useful when using the -F command line switch, for
+example if you want the netmail area to be scanned (the
+netmail area will _never_ appear in an echotoss.log file!).
+You can have as many 'Force' statements as you like.
+
+Force has the same wildcard support as Exclude.
+
+Example:
+
+Force Netmail
+
+
+Notes
+-----
+
+'NOTES No' will prevent WIMM from putting a 
+
+'--> Note: Copied by...'  
+
+message at the top of every moved or copied message.
+This is useful if you use WIMM to move netmail for Areafix and
+Raid etc. from a large, fast Squish netmail area to a nearly
+empty  *.MSG area.. (so areafix and raid run much faster).
+This can be either 'Yes' or 'No'.
+
+
+Example:
+
+Notes Yes
+
+
+AddAreaKludge
+-------------
+
+This keyword controls whether WIMM will add an 'AREA:' kludge
+to moved or copied messages. TimEd and GoldED can use this
+kludge to easily find the correct area to put a reply in
+(using the 'reply in another area' function).
+
+This can be either 'Yes' or 'No'.
+
+Example:
+
+AddAreaKludge Yes
+
+
+
+
+                    ----------------------
+                    Command line switches.
+                    ----------------------
+
+There are two command line switches that can be used for WIMM:
+
+-C : This gives path and name of an alternative configuration
+     file. The default configuration file is WIMM.CFG in the
+     current directory. 
+
+Example:
+
+WIMM -Cc:\dl\mycfg.cfg
+
+This uses c:\dl\mycfg.cfg as configuration file.
+
+
+-F : This gives the path and name of a "echotoss.log" file.
+     The areatags from this file will be read, and only the
+     corresponding areas will be scanned for personal
+     messages.
+
+Example:
+
+WIMM -Fc:\squish\echotoss.log
+
+In this case the file c:\squish\echotoss.log will be used.
+
+
+Of course, you can also use both switches together, like:
+
+WIMM -Cmycfg.cfg -Fc:\squish\echotoss.log
+
+
+
+                    -----------------------
+                    Some 'technical' stuff.
+                    -----------------------
+
+WIMM was written using Borland C++ v3.1 (DOS version),
+although the '++' extensions were not used. The OS/2 version
+was compiled using Watcom C/C++ v10.0a.
+
+The program relies heavily on the Squish MSGAPI by Scott
+Dudley.
+The MSGAPI is very easy to use, and as a result even a novice
+programmer (I'm still not very experienced..) can make useful
+programs (I hope ;-).
+
+In Squish areas WIMM tries to read the indexes directly (so it
+does NOT use the MsgApi there..!). WIMM gains a lot of speed
+by doing this (instead of physically reading all message
+headers or opening the area the 'standard' way using the
+MSGAPI).
+Usually this doesn't make any difference (except for the
+speed), but there is one exception: in areas that are in fact
+empty, but _did_ contain messages in the past, it is possible
+that WIMM is a bit confused and says there are in fact
+messages scanned in that area. 
+This hardly ever happens, and will not cause WIMM to
+malfunction (i.e.: miss any personal messages). If it bothers
+you, use WIMM 1.00, and miss out on the extra speed :-)
+(Or just delete the .SQI file for that area. If the area
+doesn't contain any messages, that won't be a problem).
+
+Apart from that you might miss personal messages if your
+indexes are 'corrupt'.
+
+
+                            -------
+                            Thanks!
+                            -------
+
+Thanks to...
+
+*    ROn van der Nagel (2:500/133) and some of his points for
+     betatesting.
+
+*    Lawrence Pit for betatesting.
+
+*    Don Dawson (my sales manager for the USA and Canada :-),
+     somehow he always manages to find loads of bugs..
+
+*    Scott Dudley for Squish, Maximus, Msgapi..
+
+*    Everyone who sent me netmail about WIMM. A nice 'thank
+     you' netmail from 'far away' can really make my day!
+     It's only because of some enthusiastic netmails that I
+     decided to work on a new version of WIMM (yep, Don
+     Dawson again, and also quite a few others!)
+
+
+            --------------------------------------
+            Feedback, bugs, complaints, donations.
+            --------------------------------------
+
+The author can be reached at his BBS:
+
+Name      :  Contrast BBS
+Location  :  The Hague, The Netherlands.
+Tel       :  31-70-3234903
+FidoNet   :  2:281/527 (V34/V32T/VFC/H16)
+Internet  :  art@cnh.wlink.nl
+
+Or via snailmail:
+
+Gerard van Essen
+Leharstraat 67
+2551 LB  Den Haag
+The Netherlands.

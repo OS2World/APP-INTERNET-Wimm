@@ -1,0 +1,50 @@
+WIMM; Where Is My Mail
+Personal mail scanner for Squish & *.MSG
+Written by Gerard van Essen with modifications by Andrew Clarke
+
+Maintained by Andrew Clarke
+E-mail: mail@ozzmosis.com
+FidoNet: 3:633/267
+
+WIMM is copyright Gerard van Essen.  Modifications released under
+the GNU General Public Licence (GPL) version 2.
+
+
+Release notes
+
+This is the first release of WIMM since Gerard van Essen's last version
+(1.31; December 25, 1994).  It has been ported to 32-bit Windows and
+UNIX.  There are no new features.
+
+
+Installation
+
+To compile WIMM from source code you will need the XMSGAPI library.
+Please refer to the INSTALL file.
+
+For usage please refer to wimm.doc (December 25, 1994).  Note that some
+comments may no longer apply to this version.
+
+
+Support
+
+You can reach the current maintainer of WIMM, Andrew Clarke, at FidoNet
+node 3:633/267, in the FidoNet ARTWARE (Artware Support), TUB (Squish
+Support), MUFFIN (Maximus Support) or FIDOSOFT.HUSKY (Husky Support)
+conferences, or send e-mail to mail@ozzmosis.com.
+
+Please send any changes, bug reports or fixes to Andrew via the above
+channels.  When sending code changes, context diffs (eg. `diff -c
+oldfile.c newfile.c') are preferred.
+
+
+Porting
+
+If you are currently porting, or wish to port, WIMM to other compilers
+or platforms, you may wish to contact Andrew via the above channels.
+
+
+Obtaining WIMM
+
+The latest release of WIMM is currently available at
+http://blizzard.dnsalias.org/fidonet/wimm/

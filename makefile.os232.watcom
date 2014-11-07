@@ -1,0 +1,17 @@
+# Makefile for Watcom C++ (32-bit OS/2)
+
+MSGAPI=..\xmsgapi\src
+MSGAPILIB=$(MSGAPI)\..\os232\watcom\xmsgapi.lib
+
+CC=wcl386
+CFLAG=-bt=os2v2 -l=os2v2 -k32k
+CDEF=-D__OS2__
+COPT=-oneatx
+CINC=-I$(MSGAPI)
+
+wimm.exe: wimm.c wimmcfg.c progname.c
+	$(CC) $(CDEF) $(CFLAG) $(COPT) $(CINC) wimm.c wimmcfg.c progname.c $(MSGAPILIB)
+
+clean:
+	del *.obj
+	del *.exe

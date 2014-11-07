@@ -1,0 +1,16 @@
+# Makefile for Microsoft Visual C++ 2.0 (32-bit Windows)
+
+MSGAPI=..\xmsgapi\src
+MSGAPILIB=$(MSGAPI)\..\win32\msvc20\xmsgapi.lib
+
+CC=cl
+CDEF=-D__NT__
+COPT=-Ox -MD -Gf
+CINC=-I$(MSGAPI)
+
+wimm.exe: wimm.c wimmcfg.c progname.c
+	$(CC) $(CDEF) $(COPT) $(CINC) wimm.c wimmcfg.c progname.c $(MSGAPILIB)
+
+clean:
+	del *.obj
+	del *.exe

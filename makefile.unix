@@ -1,0 +1,16 @@
+# Makefile for UNIX (GNU C)
+
+MSGAPI=../xmsgapi/src
+MSGAPILIB=$(MSGAPI)/../unix/gnu-c/libxmsgapi.a
+
+CC=gcc
+CFLAG=-W -Wall
+CDEF=-D__UNIX__
+COPT=-O2 -s
+CINC=-I$(MSGAPI)
+
+wimm: wimm.c wimmcfg.c progname.c
+	$(CC) $(CDEF) $(CFLAG) $(COPT) $(CINC) -o wimm wimm.c wimmcfg.c progname.c $(MSGAPILIB)
+
+clean:
+	rm *.o *.exe

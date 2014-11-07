@@ -1,0 +1,60 @@
+WIMM; Where Is My Mail
+Personal mail scanner for Squish & *.MSG
+Written by Gerard van Essen with modifications by Andrew Clarke
+
+Maintained by Andrew Clarke
+E-mail: mail@ozzmosis.com
+FidoNet: 3:633/267
+
+Installation Notes
+
+
+Supported Compilers
+
+The following makefiles can be used to compile this release of WIMM:
+
+Compiler                               Makefile
+-------------------------------------- -----------------------------------
+Borland C++ (32-bit Windows)           makefile.win32.borland
+Microsoft Visual C++ (32-bit Windows)  makefile.win32.msvc
+Watcom C++ (32-bit DOS)                makefile.dos32.watcom
+Watcom C++ (32-bit OS/2)               makefile.os232.watcom
+Watcom C++ (32-bit Windows)            makefile.win32.watcom
+GNU C (UNIX)                           makefile.unix
+
+Notes
+
+- WIMM is probably not endian-safe.  It may require a little-endian
+  CPU, ie. Intel, not Motorola, to run properly.  Among other things,
+  lastread pointers probably won't be read properly (they will most
+  likely be read backwards).  All this means WIMM [probably] won't yet
+  run correctly under Linux on a PowerPC, or under Mac OS X on a G3, for
+  example.  This will be fixed in a future version.
+
+
+Compiling
+
+To compile WIMM from source code you will need the XMSGAPI library.  The
+latest release of XMSGAPI is currently available at
+
+  http://blizzard.dnsalias.org/fidonet/xmsgapi/
+
+The base directory of both wimm and xmsgapi should be located off the
+same subdirectory, eg.
+
+  /usr/src/wimm
+  /usr/src/xmsgapi
+  /usr/src/xmsgapi/src
+
+in UNIX, or
+
+  c:\devel\csource\wimm
+  c:\devel\csource\xmsgapi
+  c:\devel\csource\xmsgapi\src
+
+in Windows or OS/2.
+
+Once XMSGAPI has been compiled you can compile WIMM.  Copy the
+appropriate compiler makefile (eg. makefile.unix) to a file named
+"makefile" and run the appropriate make utility ("make" for UNIX,
+"nmake" for MSVC, "wmake -ms" for Watcom, etc).

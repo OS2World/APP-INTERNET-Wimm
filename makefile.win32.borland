@@ -1,0 +1,16 @@
+# Makefile for Borland C++ (32-bit Windows)
+
+MSGAPI=..\xmsgapi\src
+MSGAPILIB=$(MSGAPI)\..\win32\borland\xmsgapi.lib
+
+CC=bcc32
+CDEF=-D__NT__
+COPT=-O2 -d
+CINC=-I$(MSGAPI)
+
+wimm.exe: wimm.c wimmcfg.c progname.c
+	$(CC) $(CDEF) $(COPT) $(CINC) wimm.c wimmcfg.c progname.c $(MSGAPILIB)
+
+clean:
+	del *.obj
+	del *.exe

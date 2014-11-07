@@ -1,0 +1,17 @@
+WIMM; Where Is My Mail
+Personal mail scanner for Squish & *.MSG
+Written by Gerard van Essen with modifications by Andrew Clarke
+
+Maintained by Andrew Clarke
+E-mail: mail@ozzmosis.com
+FidoNet: 3:633/267
+
+Release Notes
+
+1.31 1994-12-25  Gerard van Essen's last version
+
+2.1  2003-01-17  Ported to Windows NT & UNIX
+
+2.2  2003-01-27  Bug fixes (recompiled with XMSGAPI 1.5).  Stack size
+                 increased to 32K for Watcom versions.  Added GNU Public
+                 Licence information to usage (wimm /?).
